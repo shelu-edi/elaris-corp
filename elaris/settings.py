@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import os
+import django_heroku
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,7 +27,11 @@ SECRET_KEY = 'django-insecure-w*j8k*s3d)-mpr(&8gt%0_bp)tri2j$!c4ic50=-*b17(!9n$&
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'elaris.onrender.com']
+# ALLOWED_HOSTS = ['127.0.0.1', 'elaris.onrender.com']
+# ALLOWED_HOSTS = ['https://pdelaris.herokuapp.com/']
+ALLOWED_HOSTS = ['*']
+
+
 
 
 # Application definition
@@ -50,6 +55,7 @@ INSTALLED_APPS = [
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -140,4 +146,13 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'img')
 MEDIA_URL = '/img/'
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.ionos.com'
+EMAIL_PORT = 25
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'contact@pdelaris.com' 
+EMAIL_HOST_PASSWORD = 'Nuwangi1!'
+
+# Activate Django-Heroku.
+django_heroku.settings(locals())
